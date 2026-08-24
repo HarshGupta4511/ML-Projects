@@ -1,0 +1,96 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SMS Spam Detector</title>
+
+    <link rel="stylesheet" href="{% static 'detector/style.css' %}">
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="card">
+
+            <h1 class="title">
+                📩 SMS Spam Detector
+            </h1>
+
+            <p class="subtitle">
+                Enter a message and let the machine learning model
+                determine whether it is spam.
+            </p>
+
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <label for="message">
+                    Enter your message
+                </label>
+
+                <textarea
+                    id="message"
+                    name="message"
+                    placeholder="Type or paste your message here..."
+                    maxlength="1000"
+                ></textarea>
+
+                <br><br>
+
+                <button type="submit">
+                    🔍 Check Message
+                </button>
+
+            </form>
+
+
+            {% if result %}
+
+                <div class="result
+                    {% if result == 'SPAM' %}
+                        spam
+                    {% else %}
+                        not-spam
+                    {% endif %}
+                ">
+
+                    {% if result == "SPAM" %}
+
+                        <h2>🚨 SPAM MESSAGE</h2>
+
+                        <p>
+                            This message appears to be spam.
+                        </p>
+
+                    {% else %}
+
+                        <h2>✅ NOT SPAM</h2>
+
+                        <p>
+                            This message appears to be safe.
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
